@@ -16,10 +16,10 @@ import java.util.zip.Inflater;
 import Entities.ImageModel;
 import com.example.quizrest.ServiceImpl.ImageModelServicesImpl;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,30 +31,35 @@ public class ImageModelController {
     @Autowired
     ImageModelServicesImpl imageModelServicesImpl;
 
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+
     @ApiOperation(value="find ImageModel by id")
     @RequestMapping(value = "/ImageModel/id/{id}", method = RequestMethod.GET)
     public ImageModel findImageModelById(@PathVariable Long id) {
-        final ImageModel retrievedImage = imageModelServicesImpl.findById(id);
-        ImageModel img = new ImageModel(retrievedImage.getName(), retrievedImage.getType(),
-                decompressBytes(retrievedImage.getPicByte()));
-        return img;
+        logger.info("find ImageModel by id: "+id);
+        ImageModel retrievedImage = imageModelServicesImpl.findById(id);
+        retrievedImage.setPicByte(decompressBytes(retrievedImage.getPicByte()));
+        return retrievedImage;
     }
 
     @ApiOperation(value="delete ImageModel by id")
     @RequestMapping(value = "/ImageModel/delete/{id}", method = RequestMethod.GET)
     public void deleteById(@PathVariable Long id) {
+        logger.info("delete ImageModel by id: "+id);
         imageModelServicesImpl.delete(id);
     }
 
     @ApiOperation(value="get all ImageModels")
     @RequestMapping(value="/ImageModel/all", method = RequestMethod.GET)
     public List<ImageModel> findAllImageModel() {
+        logger.info("get all ImageModel");
         return imageModelServicesImpl.findAll();
     }
 
     @ApiOperation(value="update a ImageModel")
     @RequestMapping(value = "/ImageModel/update", method = RequestMethod.POST)
     public ImageModel updateImageModel(@RequestBody ImageModel imageModel) {
+        logger.info("update a ImageModel");
         return imageModelServicesImpl.update(imageModel);
     }
 
@@ -62,7 +67,7 @@ public class ImageModelController {
     @RequestMapping(value = "/ImageModel/upload", method = RequestMethod.POST)
     public ResponseEntity<ImageModel> uplaodImage(@RequestBody MultipartFile file) throws IOException {
 
-
+        logger.info("upload a ImageModel with Original Image Byte Size: "  + file.getBytes().length);
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
         ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(), compressBytes(file.getBytes()));
         imageModelServicesImpl.save(img);
@@ -71,7 +76,7 @@ public class ImageModelController {
             return ResponseEntity.noContent().build();
         }
 
-        URI location= ServletUriComponentsBuilder.fromPath("/Answer/id/{id}").
+        URI location= ServletUriComponentsBuilder.fromPath("/ImageModel/id/{id}").
                 buildAndExpand(responseImageModel.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
@@ -94,10 +99,11 @@ public class ImageModelController {
     @RequestMapping( value="/ImageModel/name/{imageName}", method = RequestMethod.GET)
     public ImageModel findAllByName(@PathVariable String imageName)  {
 
+        logger.info("find ImageModel by name: "+imageName);
         final ImageModel retrievedImage = imageModelServicesImpl.findByName(imageName);
-        ImageModel img = new ImageModel(retrievedImage.getName(), retrievedImage.getType(),
-                decompressBytes(retrievedImage.getPicByte()));
-        return img;
+        /*ImageModel img = new ImageModel(retrievedImage.getName(), retrievedImage.getType(),
+                decompressBytes(retrievedImage.getPicByte()));*/
+        return retrievedImage;
     }
     // compress the image bytes before storing it in the database
     public static byte[] compressBytes(byte[] data) {
@@ -116,8 +122,7 @@ public class ImageModelController {
         try {
             outputStream.close();
         } catch (IOException e) { }
-        
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+        logger.info("Compressed Image Byte Size :" + outputStream.toByteArray().length);
         return outputStream.toByteArray();
     }
 

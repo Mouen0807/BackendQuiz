@@ -24,7 +24,7 @@ import java.util.Map;
 @RestController
 
 public class QuestionController {
-    protected  final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     @Autowired
     QuestionServicesImpl questionServicesImpl;
@@ -42,30 +42,35 @@ public class QuestionController {
     @ApiOperation(value = "find Question by id")
     @RequestMapping(value = "/Question/id/{id}", method = RequestMethod.GET)
     public QuestionDTO findQuestionById(@PathVariable Long id) {
+        logger.info("find Question by: "+id);
         return questionServicesImpl.findById(id);
     }
 
     @ApiOperation(value = "delete Question by id")
     @RequestMapping(value = "/Question/delete/{id}", method = RequestMethod.GET)
     public void deleteById(@PathVariable Long id) {
+        logger.info("delete Question by: "+id);
         questionServicesImpl.delete(id);
     }
 
     @ApiOperation(value = "find Question by name")
     @RequestMapping(value = "/Question/name/{name}", method = RequestMethod.GET)
     public List<QuestionDTO> findAllByName(@PathVariable String name) {
+        logger.info("find Question by name: "+name);
         return questionServicesImpl.findAllByName(name);
     }
 
     @ApiOperation(value = "get all Questions")
     @RequestMapping(value = "/Question/all", method = RequestMethod.GET)
     public List<QuestionDTO> findAllQuestion() {
+        logger.info("get all Question");
         return questionServicesImpl.findAll();
     }
 
     @ApiOperation(value = "update a Question")
     @RequestMapping(value = "/Question/update", method = RequestMethod.POST)
     public QuestionDTO updateQuestion(@RequestBody QuestionDTO questionDTO) {
+        logger.info("update a Question");
         return questionServicesImpl.update(questionDTO);
     }
 
@@ -77,6 +82,7 @@ public class QuestionController {
                                @PathVariable Long idDifficulty,
                               @PathVariable String name) {
 
+        logger.info("add a Question with name: "+name+" CategoryId: "+idCategory+ " DifficultyId: "+idDifficulty);
         QuestionDTO questionDTO = new QuestionDTO();
         CategoryDTO categoryDTO = categoryServicesImpl.findById(idCategory);
         DifficultyDTO difficultyDTO = difficultyServicesImpl.findById(idDifficulty);
@@ -85,7 +91,7 @@ public class QuestionController {
         questionDTO.setDifficulty(difficultyDTO);
         questionDTO.setName(name);
 
-        AnswerDTO answerDTO = new AnswerDTO();
+        AnswerDTO answerDTO;
         List<AnswerDTO> listAnswers= new ArrayList<>();
         for (Map.Entry<String, Boolean> map : listNameAnswers.entrySet()) {
 
