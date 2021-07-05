@@ -35,6 +35,7 @@ public class PlayerMapperImpl implements PlayerMapper {
         playerDTO.setId( entity.getId() );
         playerDTO.setName( entity.getName() );
         playerDTO.setMail( entity.getMail() );
+        playerDTO.setPassword( entity.getPassword() );
         playerDTO.setCountry( countryMapper.toDTO( entity.getCountry() ) );
         //playerDTO.setPlayer_games( playerGameMapper.toDTOList( entity.getPlayer_games() ) );
 
@@ -52,6 +53,7 @@ public class PlayerMapperImpl implements PlayerMapper {
         player.setId( dto.getId() );
         player.setName( dto.getName() );
         player.setMail( dto.getMail() );
+        player.setPassword( dto.getPassword() );
         player.setCountry( countryMapper.toEntities( dto.getCountry() ) );
         //player.setPlayer_games( playerGameMapper.toEntitiesList( dto.getPlayer_games() ) );
 

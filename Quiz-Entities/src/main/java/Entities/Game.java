@@ -10,8 +10,8 @@ import java.util.List;
 @Entity
 
 public class Game {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
     private Date date;
     @ManyToOne
@@ -21,9 +21,7 @@ public class Game {
     @OneToMany
     private List<Question> questions=new ArrayList<Question>();
 
-    /*@OneToMany(mappedBy = "game")
-    private List<PlayerGame> player_games=new ArrayList<PlayerGame>();
-    */
+
 
     public Long getId() {
         return id;

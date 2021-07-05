@@ -1,17 +1,5 @@
 package DTO;
 
-import DTO.AnswerDTO;
-import DTO.CategoryDTO;
-import DTO.DifficultyDTO;
-import DTO.GameDTO;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-
 
 public class QuestionDTO {
 
@@ -20,7 +8,8 @@ public class QuestionDTO {
     private String name;
     private DifficultyDTO difficulty;
     private CategoryDTO category;
-    private List<AnswerDTO> answers= new ArrayList<AnswerDTO>();
+    private String concatenedAnswers; // answers are concatened in on string separate by a --
+    private int numberOfCorrectAnswer;
 
     public Long getId() {
         return id;
@@ -36,6 +25,22 @@ public class QuestionDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getConcatenedAnswers() {
+        return concatenedAnswers;
+    }
+
+    public void setConcatenedAnswers(String concatenedAnswers) {
+        this.concatenedAnswers = concatenedAnswers;
+    }
+
+    public int getNumberOfCorrectAnswer() {
+        return numberOfCorrectAnswer;
+    }
+
+    public void setNumberOfCorrectAnswer(int numberOfCorrectAnswer) {
+        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
     }
 
     public DifficultyDTO getDifficulty() {
@@ -54,11 +59,5 @@ public class QuestionDTO {
         this.category = category;
     }
 
-    public List<AnswerDTO> getAnswers() {
-        return answers;
-    }
 
-    public void setAnswers(List<AnswerDTO> answers) {
-        this.answers = answers;
-    }
 }

@@ -2,6 +2,7 @@ package com.example.quizrest.ServiceImpl;
 
 import DAO.PlayerDAOI;
 import DTO.PlayerDTO;
+import Entities.Player;
 import Services.PlayerServices;
 import com.example.quizrest.Mapper.PlayerMapper;
 import com.example.quizrest.MapperImpl.PlayerMapperImpl;
@@ -31,7 +32,16 @@ public class PlayerServicesImpl implements PlayerServices {
     }
 
     @Override
+    public PlayerDTO findByNameAndPassword(String name, String password) {
+        return playerMapper.toDTO(playerDAOI.findPlayerByNameAndPassword(name,password));
+    }
+
+    @Override
     public PlayerDTO save(PlayerDTO entityDTO) {
+        Player player = playerDAOI.findPlayerByNameAndMail(entityDTO.getName(), entityDTO.getMail());
+        if(player!=null){
+            return playerMapper.toDTO(null);
+        }
         return playerMapper.toDTO(playerDAOI.save(playerMapper.toEntities(entityDTO)));
     }
 

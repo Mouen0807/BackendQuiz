@@ -17,4 +17,7 @@ public interface PlayerDAOI extends JpaRepository<Player, Long> {
 
     @Query("select q from Player q where q.country.id = ?1 ")
     List<Player> findByCountryId(Long id);
+
+    Player findPlayerByNameAndPassword(String name,String Password);
+    Player findPlayerByNameAndMail(String name,String mail);
 }

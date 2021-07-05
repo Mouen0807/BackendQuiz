@@ -13,8 +13,17 @@ public class Player {
     private Long id;
     private String name;
     private String mail;
+    private String password;
     @ManyToOne
     private Country country;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

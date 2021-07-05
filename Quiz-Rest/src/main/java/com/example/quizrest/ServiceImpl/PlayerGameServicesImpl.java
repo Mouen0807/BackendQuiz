@@ -28,7 +28,7 @@ public class PlayerGameServicesImpl implements PlayerGameServices {
 
         @Override
         public PlayerGameDTO save(PlayerGameDTO entityDTO) {
-        return playerGameMapper.toDTO(playerGameDAOI.save(playerGameMapper.toEntities(entityDTO)));
+            return playerGameMapper.toDTO(playerGameDAOI.save(playerGameMapper.toEntities(entityDTO)));
         }
 
         @Override

@@ -15,4 +15,5 @@ public interface PlayerGameDAOI extends JpaRepository<PlayerGame,Long> {
     public List<PlayerGame> findAllByPlayerId(Long id);
 
 
+
 }

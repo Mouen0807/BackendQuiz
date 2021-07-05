@@ -2,6 +2,7 @@ package com.example.quizrest.ServiceImpl;
 import DAO.CategoryDAOI;
 import DAOImpl.CategoryDAOImpl;
 import DTO.CategoryDTO;
+import Entities.Category;
 import Services.CategoryServices;
 import com.example.quizrest.Mapper.CategoryMapper;
 import com.example.quizrest.MapperImpl.CategoryMapperImpl;
@@ -22,6 +23,10 @@ public class CategoryServicesImpl implements CategoryServices {
 
     @Override
     public CategoryDTO save(CategoryDTO entityDTO) {
+        Category category = categoryDAOI.findByName(entityDTO.getName());
+        if(category!=null){
+            return categoryMapper.toDTO(null);
+        }
         return categoryMapper.toDTO(categoryDAOI.save(categoryMapper.toEntities(entityDTO)));
     }
 

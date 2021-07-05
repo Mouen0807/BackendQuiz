@@ -1,9 +1,7 @@
 package DAO;
 
 
-import Entities.Answer;
 import Entities.Category;
-import Entities.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

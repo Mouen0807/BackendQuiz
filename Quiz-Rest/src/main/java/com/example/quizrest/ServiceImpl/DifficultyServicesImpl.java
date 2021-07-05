@@ -2,6 +2,7 @@ package com.example.quizrest.ServiceImpl;
 
 import DAO.DifficultyDAOI;
 import DTO.DifficultyDTO;
+import Entities.Difficulty;
 import Services.DifficultyServices;
 import com.example.quizrest.Mapper.DifficultyMapper;
 import com.example.quizrest.MapperImpl.DifficultyMapperImpl;
@@ -23,6 +24,10 @@ public class DifficultyServicesImpl implements DifficultyServices {
 
     @Override
     public DifficultyDTO save(DifficultyDTO entityDTO) {
+        Difficulty difficulty = difficultyDAOI.findByName(entityDTO.getName());
+        if(difficulty!=null){
+            return difficultyMapper.toDTO(null);
+        }
         return difficultyMapper.toDTO(difficultyDAOI.save(difficultyMapper.toEntities(entityDTO)));
     }
 

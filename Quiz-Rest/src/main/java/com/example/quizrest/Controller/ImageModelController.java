@@ -1,13 +1,10 @@
 package com.example.quizrest.Controller;
 
 
-        
-        
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -34,7 +31,7 @@ public class ImageModelController {
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @ApiOperation(value="find ImageModel by id")
-    @RequestMapping(value = "/ImageModel/id/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/ImageModel/id/{id}", method = RequestMethod.GET)
     public ImageModel findImageModelById(@PathVariable Long id) {
         logger.info("find ImageModel by id: "+id);
         ImageModel retrievedImage = imageModelServicesImpl.findById(id);
@@ -43,28 +40,28 @@ public class ImageModelController {
     }
 
     @ApiOperation(value="delete ImageModel by id")
-    @RequestMapping(value = "/ImageModel/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/ImageModel/delete/{id}", method = RequestMethod.GET)
     public void deleteById(@PathVariable Long id) {
         logger.info("delete ImageModel by id: "+id);
         imageModelServicesImpl.delete(id);
     }
 
     @ApiOperation(value="get all ImageModels")
-    @RequestMapping(value="/ImageModel/all", method = RequestMethod.GET)
+    @RequestMapping(value="/api/ImageModel/all", method = RequestMethod.GET)
     public List<ImageModel> findAllImageModel() {
         logger.info("get all ImageModel");
         return imageModelServicesImpl.findAll();
     }
 
     @ApiOperation(value="update a ImageModel")
-    @RequestMapping(value = "/ImageModel/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/ImageModel/update", method = RequestMethod.POST)
     public ImageModel updateImageModel(@RequestBody ImageModel imageModel) {
         logger.info("update a ImageModel");
         return imageModelServicesImpl.update(imageModel);
     }
 
     @ApiOperation(value="upload a ImageModel")
-    @RequestMapping(value = "/ImageModel/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/ImageModel/upload", method = RequestMethod.POST)
     public ResponseEntity<ImageModel> uplaodImage(@RequestBody MultipartFile file) throws IOException {
 
         logger.info("upload a ImageModel with Original Image Byte Size: "  + file.getBytes().length);
@@ -76,7 +73,7 @@ public class ImageModelController {
             return ResponseEntity.noContent().build();
         }
 
-        URI location= ServletUriComponentsBuilder.fromPath("/ImageModel/id/{id}").
+        URI location= ServletUriComponentsBuilder.fromPath("/api/ImageModel/id/{id}").
                 buildAndExpand(responseImageModel.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
@@ -96,8 +93,8 @@ public class ImageModelController {
     }*/
 
     @ApiOperation(value="find ImageModel by name")
-    @RequestMapping( value="/ImageModel/name/{imageName}", method = RequestMethod.GET)
-    public ImageModel findAllByName(@PathVariable String imageName)  {
+    @RequestMapping( value="/api/ImageModel/name", method = RequestMethod.GET)
+    public ImageModel findAllByName(@RequestBody String imageName)  {
 
         logger.info("find ImageModel by name: "+imageName);
         final ImageModel retrievedImage = imageModelServicesImpl.findByName(imageName);

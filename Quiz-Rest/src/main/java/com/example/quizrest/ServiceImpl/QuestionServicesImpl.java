@@ -34,6 +34,10 @@ public class QuestionServicesImpl implements QuestionServices {
 
     @Override
     public QuestionDTO save(QuestionDTO entityDTO) {
+        Question question = questionDAOI.findByName(entityDTO.getName());
+        if(question!=null){
+            return questionMapper.toDTO(null);
+        }
         return questionMapper.toDTO(questionDAOI.save(questionMapper.toEntities(entityDTO)));
     }
 

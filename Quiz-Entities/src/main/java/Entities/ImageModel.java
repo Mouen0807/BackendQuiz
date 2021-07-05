@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class ImageModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

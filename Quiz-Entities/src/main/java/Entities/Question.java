@@ -17,8 +17,24 @@ public class Question {
     private Difficulty difficulty;
     @ManyToOne
     private Category category;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Answer> answers= new ArrayList<Answer>();
+    private String concatenedAnswers; // answers are concatened in on string separate by a --
+    private int numberOfCorrectAnswer;
+
+    public String getConcatenedAnswers() {
+        return concatenedAnswers;
+    }
+
+    public void setConcatenedAnswers(String concatenedAnswers) {
+        this.concatenedAnswers = concatenedAnswers;
+    }
+
+    public int getNumberOfCorrectAnswer() {
+        return numberOfCorrectAnswer;
+    }
+
+    public void setNumberOfCorrectAnswer(int numberOfCorrectAnswer) {
+        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
+    }
 
     public Long getId() {
         return id;
@@ -52,11 +68,4 @@ public class Question {
         this.category = category;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
 }

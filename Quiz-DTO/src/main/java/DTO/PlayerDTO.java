@@ -15,8 +15,17 @@ public class PlayerDTO {
     private Long id;
     private String name;
     private String mail;
+    private String password;
     private CountryDTO country;
     /*private List<PlayerGameDTO> player_games=new ArrayList<PlayerGameDTO>();*/
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

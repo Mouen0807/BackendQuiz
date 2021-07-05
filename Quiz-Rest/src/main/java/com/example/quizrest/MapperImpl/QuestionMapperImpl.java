@@ -4,14 +4,11 @@ import DTO.QuestionDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Generated;
 
 import Entities.Question;
-import com.example.quizrest.Mapper.AnswerMapper;
 import com.example.quizrest.Mapper.CategoryMapper;
 import com.example.quizrest.Mapper.DifficultyMapper;
 import com.example.quizrest.Mapper.QuestionMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /*@Generated(
     value = "org.mapstruct.ap.MappingProcessor",
@@ -26,7 +23,6 @@ public class QuestionMapperImpl implements QuestionMapper {
 
     private CategoryMapper categoryMapper=new CategoryMapperImpl();
 
-    private AnswerMapper answerMapper=new AnswerMapperImpl();
 
     @Override
     public QuestionDTO toDTO(Question entity) {
@@ -40,7 +36,8 @@ public class QuestionMapperImpl implements QuestionMapper {
         questionDTO.setName( entity.getName() );
         questionDTO.setDifficulty( difficultyMapper.toDTO( entity.getDifficulty() ) );
         questionDTO.setCategory( categoryMapper.toDTO( entity.getCategory() ) );
-        questionDTO.setAnswers( answerMapper.toDTOList( entity.getAnswers() ) );
+        questionDTO.setConcatenedAnswers(entity.getConcatenedAnswers());
+        questionDTO.setNumberOfCorrectAnswer(entity.getNumberOfCorrectAnswer());
 
         return questionDTO;
     }
@@ -57,7 +54,8 @@ public class QuestionMapperImpl implements QuestionMapper {
         question.setName( dto.getName() );
         question.setDifficulty( difficultyMapper.toEntities( dto.getDifficulty() ) );
         question.setCategory( categoryMapper.toEntities( dto.getCategory() ) );
-        question.setAnswers( answerMapper.toEntitiesList( dto.getAnswers() ) );
+        question.setConcatenedAnswers(dto.getConcatenedAnswers());
+        question.setNumberOfCorrectAnswer(dto.getNumberOfCorrectAnswer());
 
         return question;
     }

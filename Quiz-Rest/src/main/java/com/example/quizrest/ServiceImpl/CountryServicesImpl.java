@@ -2,6 +2,7 @@ package com.example.quizrest.ServiceImpl;
 
 import DAO.CountryDAOI;
 import DTO.CountryDTO;
+import Entities.Country;
 import Services.CountryServices;
 import com.example.quizrest.Mapper.CountryMapper;
 import com.example.quizrest.MapperImpl.CountryMapperImpl;
@@ -23,7 +24,11 @@ public class CountryServicesImpl implements CountryServices {
 
     @Override
     public CountryDTO save(CountryDTO entityDTO) {
-        return countryMapper.toDTO(countryDAOI.save(countryMapper.toEntities(entityDTO)));
+        Country country = countryDAOI.findByName(entityDTO.getName());
+        if(country == null)
+            return countryMapper.toDTO(countryDAOI.save(countryMapper.toEntities(entityDTO)));
+        else
+            return countryMapper.toDTO(null);
     }
 
     @Override
